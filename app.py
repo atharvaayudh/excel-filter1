@@ -5,12 +5,14 @@ from werkzeug.utils import secure_filename
 
 # Initialize Flask app
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
-RESULT_FOLDER = 'results'
+
+# Use /tmp for writable directories in serverless environments
+UPLOAD_FOLDER = '/tmp/uploads'
+RESULT_FOLDER = '/tmp/results'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
-# Ensure folders exist
+# Ensure folders exist in writable /tmp directory
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
