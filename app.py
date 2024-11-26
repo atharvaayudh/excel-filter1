@@ -6,15 +6,18 @@ from werkzeug.utils import secure_filename
 # Initialize Flask app
 app = Flask(__name__)
 
-# Use /tmp for writable directories in serverless environments
+# Writable directories in serverless environments
 UPLOAD_FOLDER = '/tmp/uploads'
 RESULT_FOLDER = '/tmp/results'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
-# Ensure folders exist in writable /tmp directory
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(RESULT_FOLDER, exist_ok=True)
+# Ensure writable directories exist
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+if not os.path.exists(RESULT_FOLDER):
+    os.makedirs(RESULT_FOLDER)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
