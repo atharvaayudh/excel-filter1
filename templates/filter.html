@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Filter and Select Columns</title>
+</head>
+<body>
+    <h1>Select Filtering Options</h1>
+    <form action="/filter" method="POST">
+        <input type="hidden" name="file" value="{{ file }}">
+
+        <!-- Filter Column -->
+        <label for="filter_column">Choose a column to filter by:</label>
+        <select name="filter_column" id="filter_column" required>
+            {% for col in columns %}
+                <option value="{{ col }}">{{ col }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Columns to Include -->
+        <h2>Select Columns to Include in Output:</h2>
+        {% for col in columns %}
+            <input type="checkbox" name="columns" value="{{ col }}" id="col_{{ col }}">
+            <label for="col_{{ col }}">{{ col }}</label><br>
+        {% endfor %}
+
+        <button type="submit">Generate File</button>
+    </form>
+</body>
+</html>
