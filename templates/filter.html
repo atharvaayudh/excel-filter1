@@ -1,29 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filter and Select Columns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .columns-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .column-option {
+            display: inline-block;
+            margin: 5px;
+            text-align: center;
+        }
+        .column-option input {
+            margin-right: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>Select Filtering Options</h1>
-    <form action="/filter" method="POST">
-        <input type="hidden" name="file" value="{{ file }}">
+    <div class="container">
+        <h1>Select Filtering Options</h1>
+        <form action="/filter" method="POST">
+            <input type="hidden" name="file" value="{{ file }}">
 
-        <!-- Filter Column -->
-        <label for="filter_column">Choose a column to filter by:</label>
-        <select name="filter_column" id="filter_column" required>
-            {% for col in columns %}
-                <option value="{{ col }}">{{ col }}</option>
-            {% endfor %}
-        </select>
+            <!-- Filter Column -->
+            <label for="filter_column">Choose a column to filter by:</label>
+            <select name="filter_column" id="filter_column" required>
+                {% for col in columns %}
+                    <option value="{{ col }}">{{ col }}</option>
+                {% endfor %}
+            </select>
 
-        <!-- Columns to Include -->
-        <h2>Select Columns to Include in Output:</h2>
-        {% for col in columns %}
-            <input type="checkbox" name="columns" value="{{ col }}" id="col_{{ col }}">
-            <label for="col_{{ col }}">{{ col }}</label><br>
-        {% endfor %}
+            <!-- Columns to Include -->
+            <h2>Select Columns to Include in Output:</h2>
+            <div class="columns-container">
+                {% for col in columns %}
+                    <div class="column-option">
+                        <input type="checkbox" name="columns" value="{{ col }}" id="col_{{ col }}">
+                        <label for="col_{{ col }}">{{ col }}</label>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <button type="submit">Generate File</button>
-    </form>
+            <button type="submit">Generate File</button>
+        </form>
+    </div>
+    <footer>
+        <p>Made by <strong>Mukesh Ayudh</strong></p>
+    </footer>
 </body>
 </html>
